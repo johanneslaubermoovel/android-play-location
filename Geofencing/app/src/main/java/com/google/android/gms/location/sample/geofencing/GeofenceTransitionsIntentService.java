@@ -21,8 +21,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
@@ -32,6 +34,7 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,6 +48,8 @@ public class GeofenceTransitionsIntentService extends IntentService {
 
     protected static final String TAG = "GeofenceTransitionsIS";
 
+    private SharedPreferences mSharedPreferences;
+
     /**
      * This constructor is required, and calls the super IntentService(String)
      * constructor with the name for a worker thread.
@@ -57,6 +62,8 @@ public class GeofenceTransitionsIntentService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
     }
 
     /**
@@ -66,6 +73,12 @@ public class GeofenceTransitionsIntentService extends IntentService {
      */
     @Override
     protected void onHandleIntent(Intent intent) {
+        mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME,
+                MODE_PRIVATE);
+
+        String log = mSharedPreferences.getString(Constants.LOG_KEY, "");
+
+
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
         if (geofencingEvent.hasError()) {
             String errorMessage = GeofenceErrorMessages.getErrorString(this,
@@ -93,6 +106,16 @@ public class GeofenceTransitionsIntentService extends IntentService {
 
             // Send notification and log the transition details.
             sendNotification(geofenceTransitionDetails);
+
+            Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(500);
+
+            log += new Date().toGMTString() + " " + geofenceTransitionDetails + "\n" ;
+
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putString(Constants.LOG_KEY, log);
+            editor.apply();
+
             Log.i(TAG, geofenceTransitionDetails);
         } else {
             // Log the error.

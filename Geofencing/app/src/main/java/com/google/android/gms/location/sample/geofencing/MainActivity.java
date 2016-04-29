@@ -19,11 +19,13 @@ package com.google.android.gms.location.sample.geofencing;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,6 +41,7 @@ import com.google.android.gms.location.GeofencingApi;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -117,6 +120,13 @@ public class MainActivity extends ActionBarActivity implements
 
         // Kick off the request to build GoogleApiClient.
         buildGoogleApiClient();
+
+        refresh();
+
+    }
+
+    private void refresh() {
+        ((TextView)findViewById(R.id.output)).setText(mSharedPreferences.getString(Constants.LOG_KEY, ""));
     }
 
     /**
@@ -337,5 +347,16 @@ public class MainActivity extends ActionBarActivity implements
             mAddGeofencesButton.setEnabled(true);
             mRemoveGeofencesButton.setEnabled(false);
         }
+    }
+
+    public void refreshLog(View view) {
+        refresh();
+    }
+
+    public void clearLog(View view) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(Constants.LOG_KEY, "");
+        editor.apply();
+        refresh();
     }
 }

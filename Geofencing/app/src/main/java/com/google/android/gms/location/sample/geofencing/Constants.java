@@ -34,6 +34,8 @@ public final class Constants {
 
     public static final String GEOFENCES_ADDED_KEY = PACKAGE_NAME + ".GEOFENCES_ADDED_KEY";
 
+    public static final String LOG_KEY = PACKAGE_NAME + ".LOG_KEY";
+
     /**
      * Used to set an expiration time for a geofence. After this amount of time Location Services
      * stops tracking the geofence.
@@ -45,17 +47,30 @@ public final class Constants {
      */
     public static final long GEOFENCE_EXPIRATION_IN_MILLISECONDS =
             GEOFENCE_EXPIRATION_IN_HOURS * 60 * 60 * 1000;
-    public static final float GEOFENCE_RADIUS_IN_METERS = 1609; // 1 mile, 1.6 km
+    public static final float GEOFENCE_RADIUS_IN_METERS = 80;
 
     /**
      * Map for storing information about airports in the San Francisco bay area.
      */
     public static final HashMap<String, LatLng> BAY_AREA_LANDMARKS = new HashMap<String, LatLng>();
     static {
-        // San Francisco International Airport.
-        BAY_AREA_LANDMARKS.put("SFO", new LatLng(37.621313, -122.378955));
+        // San Francisco International Airport.48.764444, 9.167813
+        BAY_AREA_LANDMARKS.put("Marienplatz", new LatLng(48.764444, 9.167813));
+        BAY_AREA_LANDMARKS.put("Moovel Office", new LatLng(48.764348, 9.169817));
+        BAY_AREA_LANDMARKS.put("Österreichischer Platz", new LatLng(48.770726, 9.175798));
+        BAY_AREA_LANDMARKS.put("Rotebühlplatz / Stadtmitte", new LatLng(48.774877, 9.172273));
+        BAY_AREA_LANDMARKS.put("Rathaus", new LatLng(48.773766, 9.179878));
+        BAY_AREA_LANDMARKS.put("Berliner Platz", new LatLng(48.777472, 9.168287));
+        BAY_AREA_LANDMARKS.put("Schloss-/Johannesstraße", new LatLng(48.776551, 9.162597));
+        BAY_AREA_LANDMARKS.put("Schwab-/Bebelstraße", new LatLng(48.775003, 9.155083));
+        BAY_AREA_LANDMARKS.put("Arndt-/Spittastraße", new LatLng(48.774905, 9.151334));
+        BAY_AREA_LANDMARKS.put("Vogelsang", new LatLng(48.774712, 9.145974));
+        BAY_AREA_LANDMARKS.put("Herderplatz", new LatLng(48.772306, 9.141442));
+        BAY_AREA_LANDMARKS.put("Lindpaintnerstraße", new LatLng(48.774102, 9.134254));
+        BAY_AREA_LANDMARKS.put("Beethovenstraße", new LatLng(48.777151, 9.133191));
+        BAY_AREA_LANDMARKS.put("Millöckerstraße", new LatLng(48.779446, 9.132111));
+        BAY_AREA_LANDMARKS.put("Eltinger Straße", new LatLng(48.779262, 9.126634));
+        BAY_AREA_LANDMARKS.put("Botnang", new LatLng(48.778690, 9.122091));
 
-        // Googleplex.
-        BAY_AREA_LANDMARKS.put("GOOGLE", new LatLng(37.422611,-122.0840577));
     }
 }
